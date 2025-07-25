@@ -8,7 +8,32 @@
   </head>
   <body>
     <div id="app">
-      <h1>TypeScript Sandbox</h1>
+      <h1>SIETE Y MEDIO</h1>
+
+      <div id="juego">
+        <div id="carta-container">
+          <img
+            src="src/img/back.jpg"
+            alt="imagen de la carta. Al comienzo del juego se ve el retro de la carta"
+            id="imagen-carta"
+          />
+        </div>
+
+        <div id="puntuacion">
+          <h2>Puntuación acumulada: <span id="puntos"></span></h2>
+        </div>
+
+        <div id="mensaje">
+          <p id="mensaje-despues-tiros"></p>
+        </div>
+
+        <div id="botones">
+          <button id="dame-carta">DAME CARTA</button>
+          <button id="me-planto">ME PLANTO</button>
+          <button id="reiniciar">NUEVA PARTIDA</button>
+          <button id="como-seria">PROXIMA CARTA ?</button>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
