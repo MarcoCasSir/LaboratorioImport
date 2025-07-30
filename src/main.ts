@@ -1,28 +1,28 @@
 import "./style.css";
 
-let puntuacion: number = 0;
+import { setPuntuacion, getPuntuacion } from "./modelo";
 
 document.addEventListener("DOMContentLoaded", () => {
   inicioPartida();
+  eventos();
 });
 
 const inicioPartida = () => {
-  puntuacion = 0;
-
+  setPuntuacion(0); // definimo la puntuacion a 0
   muestraCarta();
-  muestraPuntuacion(puntuacion);
+  muestraPuntuacion(getPuntuacion()); // definimo mostrar la puntuacion modificada
   actualizarMensaje("");
 
   desabilitarBotones("reiniciar", true);
   desabilitarBotones("como-seria", true);
-
-  eventos();
 };
 
-// se encarga de generar un numero alatorio y dar un valor entero entre (1 -12)
-const generarCartaAleatoria = (): number => {
-  let carta = Math.floor(Math.random() * 10) + 1;
+// se encarga de generar un numero alatorio
+const obtenerNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
 
+// se encarga de generar un valor entero entre (1 -12)
+const generarCartaAleatoria = (): number => {
+  const carta = obtenerNumeroAleatorio();
   return carta > 7 ? carta + 2 : carta;
 };
 
@@ -33,8 +33,10 @@ const valorCarta = (carta: number): number => {
 
 // se encarga de modificar la puntuacion y envocar la funcion para mostrar la puntuaccion.
 const sumarPuntos = (carta: number): void => {
-  puntuacion += valorCarta(carta);
-  muestraPuntuacion(puntuacion);
+  const nuevaPuntuacion = getPuntuacion() + valorCarta(carta);
+  setPuntuacion(nuevaPuntuacion);
+
+  muestraPuntuacion(nuevaPuntuacion);
 };
 
 // se encarga de actualizar el mensaje
@@ -53,6 +55,7 @@ const actualizarMensaje = (texto: string): void => {
 
 // se encarga de cerrar la partida en caso de hacer conseguido aertar o haberse pasado de numero
 const gameOver = (): void => {
+  const puntuacion = getPuntuacion();
   if (puntuacion > 7.5) {
     actualizarMensaje(`TE HAS PASADO - GAME OVER`);
 
@@ -98,6 +101,7 @@ const muestraPuntuacion = (puntuacion: number): void => {
 
 // se encarga de mostrar el mensaje cuando se decide plantarse
 const mePlanto = (): void => {
+  const puntuacion = getPuntuacion();
   if (puntuacion < 4) {
     actualizarMensaje(`HAS SIDO MUY CONSERVADOR`);
   } else if (puntuacion === 5) {
@@ -117,8 +121,6 @@ const mePlanto = (): void => {
 // se encarga de actualizar la informacion al reiniciar la pàrtida
 const nuevaPartida = (): void => {
   inicioPartida();
-
-  actualizarMensaje("");
 
   desabilitarBotones("dame-carta", false);
   desabilitarBotones("me-planto", false);
