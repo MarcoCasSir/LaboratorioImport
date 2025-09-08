@@ -7,13 +7,3 @@ export const setPuntuacion = (nuevaPuntuacion: number): void => {
 
 // ofrece la puntuacion modificada
 export const getPuntuacion = (): number => puntuacion;
-
-/*export interface Partida {
-  puntuacion: number;
-  estado: "jugando" | "ganado" | "perdido" | "plantado";
-}
-
-export const crearPartida = (): Partida => ({
-  puntuacion: 0,  
-  estado: "jugando",
-});*/
