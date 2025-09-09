@@ -1,34 +1,25 @@
 import { setPuntuacion, getPuntuacion } from "./modelo";
 
-import { gameOver, muestraCarta, muestraPuntuacion } from "./ui";
+//import { muestraPuntuacion } from "./ui";
 
 // se encarga de generar un numero alatorio
-const obtenerNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
+export const obtenerNumeroAleatorio = (): number =>
+  Math.floor(Math.random() * 10) + 1;
 
 //se encarga de asignar un valor a la carta
-const valorCarta = (carta: number): number => {
-  return carta > 7 ? 0.5 : carta;
+const valorCarta = (numeroAleatorio: number): number => {
+  return numeroAleatorio > 7 ? 0.5 : numeroAleatorio;
 };
 
 // se encarga de generar un valor entero entre (1 -12)
-export const generarCartaAleatoria = (): number => {
-  const carta = obtenerNumeroAleatorio();
-  return carta > 7 ? carta + 2 : carta;
+export const generarCartaAleatoria = (numeroAleatorio: number): number => {
+  return numeroAleatorio > 7 ? numeroAleatorio + 2 : numeroAleatorio;
 };
 
 // se encarga de modificar la puntuacion y envocar la funcion para mostrar la puntuaccion.
-export const sumarPuntos = (carta: number): void => {
-  const nuevaPuntuacion = getPuntuacion() + valorCarta(carta);
+export const sumarPuntos = (numeroAleatorio: number): number => {
+  const nuevaPuntuacion = getPuntuacion() + valorCarta(numeroAleatorio);
   setPuntuacion(nuevaPuntuacion);
 
-  muestraPuntuacion(nuevaPuntuacion);
-};
-
-// al activar el evento del boton dame carta, inicializa las funciones necesarias a partir de la carta generada automaticamente
-export const dameCarta = (): void => {
-  const carta = generarCartaAleatoria();
-
-  muestraCarta(carta);
-  sumarPuntos(carta);
-  gameOver();
+  return nuevaPuntuacion;
 };

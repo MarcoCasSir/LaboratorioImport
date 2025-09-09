@@ -1,11 +1,15 @@
-import { getPuntuacion, setPuntuacion } from "./modelo";
+import { getPuntuacion, setPuntuacion, puntuacion } from "./modelo";
 
-import { generarCartaAleatoria, sumarPuntos, dameCarta } from "./motor";
+import {
+  generarCartaAleatoria,
+  sumarPuntos,
+  obtenerNumeroAleatorio,
+} from "./motor";
 
 export const inicioPartida = () => {
   setPuntuacion(0); // definimo la puntuacion a 0
   muestraCarta();
-  muestraPuntuacion(getPuntuacion()); // definimo mostrar la puntuacion modificada
+  muestraPuntuacion(puntuacion); // definimo mostrar la puntuacion modificada
   actualizarMensaje("");
 
   desabilitarBotones("reiniciar", true);
@@ -56,61 +60,69 @@ export const nuevaPartida = (): void => {
   desabilitarBotones("me-planto", false);
 };
 
+// se encarga de definir las rutas de las imagenes de las cartas.
+export const rutaCarta = (numeroCarta?: number): string => {
+  if (typeof numeroCarta !== "number") {
+    return "src/img/back.jpg";
+  }
+  switch (numeroCarta) {
+    case 1:
+      return "src/img/1_as-copas.jpg";
+
+    case 2:
+      return "src/img/2_dos-copas.jpg";
+
+    case 3:
+      return "src/img/3_tres-copas.jpg";
+
+    case 4:
+      return "src/img/4_cuatro-copas.jpg";
+
+    case 5:
+      return "src/img/5_cinco-copas.jpg";
+
+    case 6:
+      return "src/img/6_seis-copas.jpg";
+
+    case 7:
+      return "src/img/7_siete-copas.jpg";
+
+    case 10:
+      return "src/img/10_sota-copas.jpg";
+
+    case 11:
+      return "src/img/11_caballo-copas.jpg";
+
+    case 12:
+      return "src/img/12_rey-copas.jpg";
+
+    default:
+      return "src/img/bacl.jpg";
+  }
+};
+
 // se encarga de mostrar la carta que se ha generado.
-export const muestraCarta = (carta?: number): void => {
+export const muestraCarta = (numeroCarta?: number): void => {
   const imagen = document.getElementById("imagen-carta");
   if (
     imagen !== null &&
     imagen !== undefined &&
     imagen instanceof HTMLImageElement
   ) {
-    if (typeof carta === "number") {
-      switch (carta) {
-        case 1:
-          imagen.src = "src/img/1_as-copas.jpg";
-          break;
-        case 2:
-          imagen.src = "src/img/2_dos-copas.jpg";
-          break;
-        case 3:
-          imagen.src = "src/img/3_tres-copas.jpg";
-          break;
-        case 4:
-          imagen.src = "src/img/4_cuatro-copas.jpg";
-          break;
-        case 5:
-          imagen.src = "src/img/5_cinco-copas.jpg";
-          break;
-        case 6:
-          imagen.src = "src/img/6_seis-copas.jpg";
-          break;
-        case 7:
-          imagen.src = "src/img/7_siete-copas.jpg";
-          break;
-        case 10:
-          imagen.src = "src/img/10_sota-copas.jpg";
-          break;
-        case 11:
-          imagen.src = "src/img/11_caballo-copas.jpg";
-          break;
-        case 12:
-          imagen.src = "src/img/12_rey-copas.jpg";
-          break;
-        default:
-          imagen.src = "src/img/bacl.jpg";
-      }
-    } else {
-      imagen.src = "src/img/back.jpg";
-    }
+    imagen.src = rutaCarta(numeroCarta);
+  } else {
+    console.warn("Elemento 'imagen-carta' no encontrado");
   }
 };
 
 // se encarga de mostrar las posible situacion si hubieramos continuado el juego
 export const proximaCarta = (): void => {
-  let carta = generarCartaAleatoria();
+  const numeroAleatorio = obtenerNumeroAleatorio();
+  let numeroCarta = generarCartaAleatoria(numeroAleatorio);
 
-  muestraCarta(carta);
-  sumarPuntos(carta);
+  muestraCarta(numeroCarta);
+  sumarPuntos(numeroAleatorio);
+  muestraPuntuacion(puntuacion);
   gameOver();
 };
 
@@ -201,4 +213,17 @@ export const muestraPuntuacion = (puntuacion: number): void => {
   } else {
     console.log("Elemento 'puntos' no encontrado ");
   }
+};
+
+// al activar el evento del boton dame carta, inicializa las funciones necesarias a partir de la carta generada automaticamente
+export const dameCarta = (): void => {
+  const numeroAleatorio = obtenerNumeroAleatorio();
+
+  const numeroCarta = generarCartaAleatoria(numeroAleatorio);
+
+  muestraCarta(numeroCarta);
+  sumarPuntos(numeroAleatorio);
+
+  muestraPuntuacion(puntuacion);
+  gameOver();
 };
