@@ -1,4 +1,4 @@
-import { setPuntuacion, getPuntuacion } from "./modelo";
+import { puntuacion, setPuntuacion } from "./modelo";
 
 //import { muestraPuntuacion } from "./ui";
 
@@ -18,7 +18,7 @@ export const generarCartaAleatoria = (numeroAleatorio: number): number => {
 
 // se encarga de modificar la puntuacion y envocar la funcion para mostrar la puntuaccion.
 export const sumarPuntos = (numeroAleatorio: number): number => {
-  const nuevaPuntuacion = getPuntuacion() + valorCarta(numeroAleatorio);
+  const nuevaPuntuacion = valorCarta(numeroAleatorio) + puntuacion;
   setPuntuacion(nuevaPuntuacion);
 
   return nuevaPuntuacion;

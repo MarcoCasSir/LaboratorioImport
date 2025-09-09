@@ -218,7 +218,6 @@ export const muestraPuntuacion = (puntuacion: number): void => {
 // al activar el evento del boton dame carta, inicializa las funciones necesarias a partir de la carta generada automaticamente
 export const dameCarta = (): void => {
   const numeroAleatorio = obtenerNumeroAleatorio();
-
   const numeroCarta = generarCartaAleatoria(numeroAleatorio);
 
   muestraCarta(numeroCarta);
