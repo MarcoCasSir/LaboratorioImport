@@ -1,10 +1,6 @@
 import { getPuntuacion, setPuntuacion, puntuacion } from "./modelo";
 
-import {
-  generarCartaAleatoria,
-  sumarPuntos,
-  obtenerNumeroAleatorio,
-} from "./motor";
+import { jugarCarta } from "./motor";
 
 export const inicioPartida = () => {
   setPuntuacion(0); // definimo la puntuacion a 0
@@ -115,17 +111,6 @@ export const muestraCarta = (numeroCarta?: number): void => {
   }
 };
 
-// se encarga de mostrar las posible situacion si hubieramos continuado el juego
-export const proximaCarta = (): void => {
-  const numeroAleatorio = obtenerNumeroAleatorio();
-  let numeroCarta = generarCartaAleatoria(numeroAleatorio);
-
-  muestraCarta(numeroCarta);
-  sumarPuntos(numeroAleatorio);
-  muestraPuntuacion(puntuacion);
-  gameOver();
-};
-
 // se encarga de desabilitar todos los botones.
 export const desabilitarBotones = (id: string, disabled: boolean): void => {
   const button = document.getElementById(id);
@@ -217,12 +202,17 @@ export const muestraPuntuacion = (puntuacion: number): void => {
 
 // al activar el evento del boton dame carta, inicializa las funciones necesarias a partir de la carta generada automaticamente
 export const dameCarta = (): void => {
-  const numeroAleatorio = obtenerNumeroAleatorio();
-  const numeroCarta = generarCartaAleatoria(numeroAleatorio);
+  const { numeroCarta, puntuacion } = jugarCarta();
 
   muestraCarta(numeroCarta);
-  sumarPuntos(numeroAleatorio);
+  muestraPuntuacion(puntuacion);
+  gameOver();
+};
 
+// se encarga de mostrar las posible situacion si hubieramos continuado el juego
+export const proximaCarta = (): void => {
+  const { numeroCarta, puntuacion } = jugarCarta();
+  muestraCarta(numeroCarta);
   muestraPuntuacion(puntuacion);
   gameOver();
 };

@@ -1,7 +1,5 @@
 import { puntuacion, setPuntuacion } from "./modelo";
 
-//import { muestraPuntuacion } from "./ui";
-
 // se encarga de generar un numero alatorio
 export const obtenerNumeroAleatorio = (): number =>
   Math.floor(Math.random() * 10) + 1;
@@ -22,4 +20,12 @@ export const sumarPuntos = (numeroAleatorio: number): number => {
   setPuntuacion(nuevaPuntuacion);
 
   return nuevaPuntuacion;
+};
+
+export const jugarCarta = (): { numeroCarta: number; puntuacion: number } => {
+  const numeroAleatorio = obtenerNumeroAleatorio();
+  const numeroCarta = generarCartaAleatoria(numeroAleatorio);
+  const puntuacionDespuesJugada = sumarPuntos(numeroAleatorio);
+
+  return { numeroCarta, puntuacion: puntuacionDespuesJugada };
 };
