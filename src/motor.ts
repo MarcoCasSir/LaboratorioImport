@@ -15,17 +15,17 @@ export const generarCartaAleatoria = (numeroAleatorio: number): number => {
 };
 
 // se encarga de modificar la puntuacion y envocar la funcion para mostrar la puntuaccion.
-export const sumarPuntos = (numeroAleatorio: number): number => {
-  const nuevaPuntuacion = valorCarta(numeroAleatorio) + puntuacion;
+export const sumarPuntos = (numeroCarta: number): number => {
+  const nuevaPuntuacion = puntuacion + valorCarta(numeroCarta);
   setPuntuacion(nuevaPuntuacion);
-
   return nuevaPuntuacion;
 };
 
-export const jugarCarta = (): { numeroCarta: number; puntuacion: number } => {
-  const numeroAleatorio = obtenerNumeroAleatorio();
+export const jugarCarta = (
+  numeroAleatorio: number
+): { numeroCarta: number; puntuacion: number } => {
   const numeroCarta = generarCartaAleatoria(numeroAleatorio);
-  const puntuacionDespuesJugada = sumarPuntos(numeroAleatorio);
+  const puntuacionDespuesJugada = sumarPuntos(numeroCarta);
 
   return { numeroCarta, puntuacion: puntuacionDespuesJugada };
 };
